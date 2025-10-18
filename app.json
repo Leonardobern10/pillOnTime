@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "PillOnTime",
-    "slug": "PillOnTime",
+    "slug": "pill-on-time",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,7 +9,9 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.leonardo.pillontime",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +21,9 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.leonardo.pillontime",
+      "versionCode": 1
     },
     "web": {
       "output": "static",
@@ -39,7 +43,8 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,

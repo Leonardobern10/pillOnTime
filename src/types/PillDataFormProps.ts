@@ -3,5 +3,5 @@ export type PillDataFormProps = {
   quantity: string;
   freq: string;
   hour: string;
-  obs: string;
+  obs?: string;
 };

@@ -3,6 +3,7 @@ import InputString from "@/src/components/global/InputString";
 import Select from "@/src/components/global/Select";
 import { selectItems } from "@/src/data/selectFreqData";
 import { generateHours } from "@/src/services/generateHours";
+import { addPill } from "@/src/services/pillService";
 import { PillDataFormProps } from "@/src/types/PillDataFormProps";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -18,8 +19,8 @@ export default function Add({ navigation }: any) {
   };
   const [dataForm, setDataForm] = useState<PillDataFormProps>(initDefault);
 
-  const test = (value: boolean) => {
-    console.log(dataForm);
+  const submit = (value: boolean) => {
+    addPill(dataForm);
     setDataForm(initDefault);
   };
 
@@ -62,7 +63,7 @@ export default function Add({ navigation }: any) {
           onChangeText={(value: string) =>
             setDataForm({ ...dataForm, obs: value })
           }
-          value={dataForm.obs}
+          value={dataForm.obs!}
           boxText
           placeholder="Ex. Tomar com alimentos"
           label="Observações (opcional)"
@@ -70,7 +71,7 @@ export default function Add({ navigation }: any) {
         <ButtonDefault
           textDefault="Adicionar"
           textPressed="Desfazer"
-          setStatus={test}
+          setStatus={submit}
           press={false}
         />
       </View>

@@ -1,9 +1,12 @@
 import PillsComponent from "@/src/components/pills/PillsComponent";
 import ResumeStatistics from "@/src/components/stats/ResumeStatistics";
+import { usePillsStore } from "@/src/store/pillsStore";
 import { ThemeProps } from "@/src/theme/ThemeProps";
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -11,6 +14,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export const Home = () => {
   const { theme, colors, toggleTheme } = useTheme();
   const style = headerStyle(colors);
+  const { pills, loadPills } = usePillsStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      loadPills();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={style.safeArea}>
@@ -50,8 +60,16 @@ export const Home = () => {
       <ScrollView style={style.scrollStyle}>
         <ResumeStatistics />
         <View style={style.pillsGroup}>
-          <PillsComponent />
-          <PillsComponent />
+          {pills?.map((el, index) => (
+            <PillsComponent
+              key={index}
+              name={el.name}
+              quantity={el.quantity}
+              freq={el.freq}
+              hour={el.hour}
+              obs={el.obs}
+            />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>

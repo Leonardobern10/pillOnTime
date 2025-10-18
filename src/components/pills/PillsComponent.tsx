@@ -3,11 +3,18 @@ import { typography } from "@/src/theme/tipography";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useState } from "react";
 
+import { PillDataFormProps } from "@/src/types/PillDataFormProps";
 import { Text, View } from "react-native";
 import ButtonDefault from "../global/ButtonDefault";
 import { PillsComponenteStyle } from "./PillsComponent.style";
 
-export default function PillsComponent() {
+export default function PillsComponent({
+  name,
+  quantity,
+  freq,
+  hour,
+  obs,
+}: PillDataFormProps) {
   const [took, setTook] = useState<boolean>(false);
   const { colors } = useTheme();
 
@@ -26,7 +33,7 @@ export default function PillsComponent() {
       }}
     >
       <View>
-        <Text style={typography(colors).heading2}>Losartana Potássica</Text>
+        <Text style={typography(colors).heading2}>{name}</Text>
       </View>
       <View
         style={{
@@ -41,7 +48,7 @@ export default function PillsComponent() {
             size={17}
             color={`${colors.primary.background}`}
           />
-          <Text style={typography(colors).body2}>50 mg</Text>
+          <Text style={typography(colors).body2}>{quantity}</Text>
         </View>
         <View style={PillsComponenteStyle(colors).flexStartView}>
           <FontAwesome5
@@ -51,20 +58,40 @@ export default function PillsComponent() {
           />
           <View style={PillsComponenteStyle(colors).flexRowBetweenView}>
             <Text style={typography(colors).body2}>Próxima dose: </Text>
-            <Text style={typography(colors).heading1}>20:30</Text>
+            <Text style={typography(colors).heading1}>{hour}</Text>
           </View>
         </View>
       </View>
       <View
         style={{
-          backgroundColor: `${colors.paper.background}`,
-          padding: 10,
-          borderRadius: 10,
-          width: 120,
+          backgroundColor: `${colors.light.background}`,
+          padding: 5,
+          borderRadius: 30,
+          width: "35%",
+          opacity: 0.7,
         }}
       >
-        <Text style={typography(colors).body2}>1 vez ao dia</Text>
+        <Text
+          style={[
+            typography(colors).body2,
+            { textAlign: "center", color: colors.paper.text },
+          ]}
+        >
+          {freq}
+        </Text>
       </View>
+      {obs && (
+        <View
+          style={{
+            backgroundColor: `${colors.paper.background}`,
+            padding: 10,
+            borderRadius: 10,
+            width: 120,
+          }}
+        >
+          <Text style={typography(colors).body2}>{obs}</Text>
+        </View>
+      )}
       <View>
         <ButtonDefault
           textDefault="Tomar remédio"
