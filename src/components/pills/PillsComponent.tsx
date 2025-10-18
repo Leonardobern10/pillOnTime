@@ -1,9 +1,8 @@
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
+import { PillDataFormProps } from "@/src/types/PillDataFormProps";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useState } from "react";
-
-import { PillDataFormProps } from "@/src/types/PillDataFormProps";
 import { Text, View } from "react-native";
 import ButtonDefault from "../global/ButtonDefault";
 import { PillsComponenteStyle } from "./PillsComponent.style";
