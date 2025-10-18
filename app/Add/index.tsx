@@ -4,12 +4,15 @@ import Select from "@/src/components/global/Select";
 import { selectItems } from "@/src/data/selectFreqData";
 import { generateHours } from "@/src/services/generateHours";
 import { addPill } from "@/src/services/pillService";
+import { ThemeProps } from "@/src/theme/ThemeProps";
+import { useTheme } from "@/src/theme/ThemeProvider";
 import { PillDataFormProps } from "@/src/types/PillDataFormProps";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Add({ navigation }: any) {
+  const { colors } = useTheme();
   const initDefault = {
     name: "",
     quantity: "",
@@ -25,8 +28,8 @@ export default function Add({ navigation }: any) {
   };
 
   return (
-    <SafeAreaView>
-      <View style={addStyle.container}>
+    <SafeAreaView style={addStyle(colors).safeArea}>
+      <View style={addStyle(colors).container}>
         <InputString
           onChangeText={(value: string) =>
             setDataForm({ ...dataForm, name: value })
@@ -79,14 +82,23 @@ export default function Add({ navigation }: any) {
   );
 }
 
-const addStyle = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    rowGap: 10,
-    height: "100%",
-    padding: 20,
-  },
-});
+const addStyle = (colors: ThemeProps) =>
+  StyleSheet.create({
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-evenly",
+      rowGap: 10,
+      height: "100%",
+      padding: 20,
+    },
+    safeArea: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "stretch",
+      backgroundColor: colors.light.background,
+      width: "100%",
+    },
+  });

@@ -31,8 +31,9 @@ export default function Resume({
         paddingTop: 10,
         paddingBottom: 20,
         boxShadow: `${
-          colors === darkTheme &&
-          "1px 1px 1px #dddddd68, -1px 1px 1px #dddddd68, 1px -1px 1px #dddddd68, -1px -1px 1px #dddddd68"
+          colors === darkTheme
+            ? `1px 1px 1px #dddddd68, -1px 1px 1px #dddddd68, 1px -1px 1px #dddddd68, -1px -1px 1px #dddddd68`
+            : `-1px -1px 1px ${colors.primary.background}`
         }`,
       }}
     >

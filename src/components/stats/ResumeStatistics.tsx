@@ -2,7 +2,11 @@ import { View } from "react-native";
 import { resumeStatsData } from "../../data/resumeStatsData";
 import Resume from "./Resume";
 
-export default function ResumeStatistics() {
+export default function ResumeStatistics({
+  countPills,
+}: {
+  countPills: number;
+}) {
   return (
     <View
       style={{

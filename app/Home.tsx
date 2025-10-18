@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export const Home = () => {
   const { theme, colors, toggleTheme } = useTheme();
   const style = headerStyle(colors);
-  const { pills, loadPills } = usePillsStore();
+  const { pills, loadPills, count } = usePillsStore();
 
   useFocusEffect(
     useCallback(() => {
@@ -58,7 +58,7 @@ export const Home = () => {
 
       {/* Conteúdo */}
       <ScrollView style={style.scrollStyle}>
-        <ResumeStatistics />
+        <ResumeStatistics countPills={count} />
         <View style={style.pillsGroup}>
           {pills?.map((el, index) => (
             <PillsComponent
