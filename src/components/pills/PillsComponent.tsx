@@ -3,7 +3,9 @@ import { typography } from "@/src/theme/tipography";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useState } from "react";
 
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
+import ButtonDefault from "../global/ButtonDefault";
+import { PillsComponenteStyle } from "./PillsComponent.style";
 
 export default function PillsComponent() {
   const [took, setTook] = useState<boolean>(false);
@@ -33,15 +35,7 @@ export default function PillsComponent() {
           justifyContent: "center",
         }}
       >
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            columnGap: 10,
-          }}
-        >
+        <View style={PillsComponenteStyle(colors).flexStartView}>
           <FontAwesome5
             name="pills"
             size={17}
@@ -49,30 +43,13 @@ export default function PillsComponent() {
           />
           <Text style={typography(colors).body2}>50 mg</Text>
         </View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            columnGap: 10,
-          }}
-        >
+        <View style={PillsComponenteStyle(colors).flexStartView}>
           <FontAwesome5
             name="clock"
             size={17}
             color={`${colors.primary.background}`}
           />
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              columnGap: 10,
-              width: "auto",
-            }}
-          >
+          <View style={PillsComponenteStyle(colors).flexRowBetweenView}>
             <Text style={typography(colors).body2}>Próxima dose: </Text>
             <Text style={typography(colors).heading1}>20:30</Text>
           </View>
@@ -89,28 +66,12 @@ export default function PillsComponent() {
         <Text style={typography(colors).body2}>1 vez ao dia</Text>
       </View>
       <View>
-        <TouchableOpacity
-          onPress={() => setTook(!took)}
-          style={{
-            backgroundColor: `${
-              took ? colors.light.background : colors.primary.background
-            }`,
-            padding: 10,
-            borderRadius: 10,
-          }}
-        >
-          <Text
-            style={[
-              typography(colors).body1,
-              {
-                color: `${took ? colors.paper.text : colors.dark.text}`,
-                textAlign: "center",
-              },
-            ]}
-          >
-            {took ? "Desfazer" : "Tomar remédio"}
-          </Text>
-        </TouchableOpacity>
+        <ButtonDefault
+          textDefault="Tomar remédio"
+          textPressed="Desfazer"
+          setStatus={setTook}
+          press={took}
+        />
       </View>
     </View>
   );
