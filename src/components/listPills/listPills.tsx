@@ -8,7 +8,7 @@ import { listPillsStyle } from "./listPills.style";
 
 export default function ListPills() {
   const { colors } = useTheme();
-  const { pills, loadPills } = usePillsStore();
+  const { pills, loadPills, delPill } = usePillsStore();
   useFocusEffect(
     useCallback(() => {
       loadPills();
@@ -16,14 +16,16 @@ export default function ListPills() {
   );
   return (
     <View style={listPillsStyle(colors).pillsGroup}>
-      {pills?.map((el, index) => (
+      {pills?.map((el) => (
         <PillsComponent
-          key={index}
+          id={el.id}
+          key={el.id}
           name={el.name}
           quantity={el.quantity}
           freq={el.freq}
           hour={el.hour}
           obs={el.obs}
+          delPill={delPill}
         />
       ))}
     </View>

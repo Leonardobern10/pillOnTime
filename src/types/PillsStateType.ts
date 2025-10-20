@@ -5,4 +5,5 @@ export type PillsStateType = {
   count: number;
   loadPills: () => Promise<void>;
   addPill: (pill: PillDataFormProps) => Promise<void>;
+  delPill: (id: number) => Promise<void>;
 };

@@ -1,5 +1,6 @@
 import PillsComponent from "@/src/components/pills/PillsComponent";
 import ResumeStatistics from "@/src/components/stats/ResumeStatistics";
+import { delPill } from "@/src/services/pillService";
 import { usePillsStore } from "@/src/store/pillsStore";
 import { ThemeProps } from "@/src/theme/ThemeProps";
 import { useTheme } from "@/src/theme/ThemeProvider";
@@ -60,16 +61,24 @@ export const Home = () => {
       <ScrollView style={style.scrollStyle}>
         <ResumeStatistics countPills={count} />
         <View style={style.pillsGroup}>
-          {pills?.map((el, index) => (
-            <PillsComponent
-              key={index}
-              name={el.name}
-              quantity={el.quantity}
-              freq={el.freq}
-              hour={el.hour}
-              obs={el.obs}
-            />
-          ))}
+          {pills.length === 0 || !pills ? (
+            <Text style={typography(colors).body1}>
+              Nenhum remédio cadastrado...
+            </Text>
+          ) : (
+            pills?.map((el, index) => (
+              <PillsComponent
+                id={el.id}
+                key={index}
+                name={el.name}
+                quantity={el.quantity}
+                freq={el.freq}
+                hour={el.hour}
+                obs={el.obs}
+                delPill={(id) => delPill(id)}
+              />
+            ))
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

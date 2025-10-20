@@ -4,13 +4,14 @@ import { StyleSheet } from "react-native";
 export const PillsComponenteStyle = (colors: ThemeProps) =>
   StyleSheet.create({
     viewContainer: {
+      position: "relative",
       display: "flex",
       flexDirection: "column",
       flex: 1,
       minHeight: 260,
       justifyContent: "space-between",
       padding: 20,
-      boxShadow: `-4px -1px 1px ${colors.primary.background}`,
+      boxShadow: `-4px 0px 1px ${colors.primary.background}`,
       borderRadius: 10,
       backgroundColor: `${colors.paper.background}`,
     },

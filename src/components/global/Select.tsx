@@ -1,8 +1,9 @@
+import { ThemeProps } from "@/src/theme/ThemeProps";
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
 import { SelectProps } from "@/src/types/SelectProps";
 import { Picker } from "@react-native-picker/picker";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { inputStyle } from "./Input.style";
 
 export default function Select({
@@ -34,12 +35,29 @@ export default function Select({
       >
         {selectData.map((el) =>
           typeof el === "string" ? (
-            <Picker.Item label={el} value={el} key={el} />
+            <Picker.Item
+              style={[typography(colors).heading2, style(colors).item]}
+              label={el}
+              value={el}
+              key={el}
+            />
           ) : (
-            <Picker.Item label={el.title} value={el.title} key={el.id} />
+            <Picker.Item
+              style={[typography(colors).heading2, style(colors).item]}
+              label={el.title}
+              value={el.title}
+              key={el.id}
+            />
           )
         )}
       </Picker>
     </View>
   );
 }
+
+const style = (colors: ThemeProps) =>
+  StyleSheet.create({
+    item: {
+      color: colors.paper.text,
+    },
+  });

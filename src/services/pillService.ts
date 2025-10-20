@@ -27,3 +27,15 @@ export async function getAllPills(): Promise<PillDataFormProps[] | null> {
     console.info("Operação de consulta concluida!");
   }
 }
+
+/** */
+export async function delPill(id: number): Promise<void> {
+  console.log("Removendo registro...");
+  try {
+    await db.runAsync("DELETE FROM pills WHERE id = ?", [id]);
+
+    console.log(`Registro id: ${id} removido com sucesso!`);
+  } catch (error) {
+    console.error("Erro ao deletar registro: " + error);
+  }
+}

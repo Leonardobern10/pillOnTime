@@ -2,35 +2,47 @@ import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
 import { PillDataFormProps } from "@/src/types/PillDataFormProps";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import ButtonDefault from "../global/ButtonDefault";
 import { PillsComponenteStyle } from "./PillsComponent.style";
 
 export default function PillsComponent({
+  id,
   name,
   quantity,
   freq,
   hour,
   obs,
+  delPill,
 }: PillDataFormProps) {
   const [took, setTook] = useState<boolean>(false);
   const { colors } = useTheme();
+  const style = PillsComponenteStyle(colors);
 
   return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
-        minHeight: 260,
-        justifyContent: "space-between",
-        padding: 20,
-        boxShadow: `-4px -1px 1px ${colors.primary.background}`,
-        borderRadius: 10,
-        backgroundColor: `${colors.paper.background}`,
-      }}
-    >
+    <View style={style.viewContainer}>
+      <View
+        style={{
+          width: 30,
+          height: 30,
+          position: "absolute",
+          right: 10,
+          top: 12,
+        }}
+      >
+        <TouchableOpacity
+          style={{ width: "100%", height: "100%" }}
+          onPress={() => delPill(id!)}
+        >
+          <MaterialCommunityIcons
+            name="delete-outline"
+            size={30}
+            color="rgba(46, 45, 45, 0.56)"
+          />
+        </TouchableOpacity>
+      </View>
       <View>
         <Text style={typography(colors).heading2}>{name}</Text>
       </View>
@@ -41,7 +53,7 @@ export default function PillsComponent({
           justifyContent: "center",
         }}
       >
-        <View style={PillsComponenteStyle(colors).flexStartView}>
+        <View style={style.flexStartView}>
           <FontAwesome5
             name="pills"
             size={17}
@@ -49,13 +61,13 @@ export default function PillsComponent({
           />
           <Text style={typography(colors).body2}>{quantity}</Text>
         </View>
-        <View style={PillsComponenteStyle(colors).flexStartView}>
+        <View style={style.flexStartView}>
           <FontAwesome5
             name="clock"
             size={17}
             color={`${colors.primary.background}`}
           />
-          <View style={PillsComponenteStyle(colors).flexRowBetweenView}>
+          <View style={style.flexRowBetweenView}>
             <Text style={typography(colors).body2}>Próxima dose: </Text>
             <Text style={typography(colors).heading1}>{hour}</Text>
           </View>
