@@ -1,6 +1,6 @@
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
-import { PillDataFormProps } from "@/src/types/PillDataFormProps";
+import { PillType } from "@/src/types/PillType";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function PillsComponent({
   hour,
   obs,
   delPill,
-}: PillDataFormProps) {
+}: PillType) {
   const [took, setTook] = useState<boolean>(false);
   const { colors } = useTheme();
   const style = PillsComponenteStyle(colors);

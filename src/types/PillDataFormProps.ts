@@ -5,5 +5,4 @@ export type PillDataFormProps = {
   freq: string;
   hour: string;
   obs?: string;
-  delPill: (id: number) => void;
 };

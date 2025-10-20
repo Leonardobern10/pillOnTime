@@ -18,7 +18,7 @@ export default function ListPills() {
     <View style={listPillsStyle(colors).pillsGroup}>
       {pills?.map((el) => (
         <PillsComponent
-          id={el.id}
+          id={el.id!}
           key={el.id}
           name={el.name}
           quantity={el.quantity}
