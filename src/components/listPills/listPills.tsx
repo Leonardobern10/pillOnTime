@@ -6,7 +6,7 @@ import { View } from "react-native";
 import PillsComponent from "../pills/PillsComponent";
 import { listPillsStyle } from "./listPills.style";
 
-export default function ListPills() {
+export default function ListPills({ onList }: { onList: boolean }) {
   const { colors } = useTheme();
   const { pills, loadPills, delPill } = usePillsStore();
   useFocusEffect(
@@ -26,6 +26,7 @@ export default function ListPills() {
           hour={el.hour}
           obs={el.obs}
           delPill={delPill}
+          onList={onList}
         />
       ))}
     </View>

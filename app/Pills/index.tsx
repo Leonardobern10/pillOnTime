@@ -32,7 +32,7 @@ export default function Pills({ navigation }: any) {
         />
       </View>
       <ScrollView style={{ width: "100%", height: "100%", padding: 10 }}>
-        <ListPills />
+        <ListPills onList />
       </ScrollView>
     </SafeAreaView>
   );

@@ -16,6 +16,7 @@ export default function PillsComponent({
   hour,
   obs,
   delPill,
+  onList,
 }: PillType) {
   const [took, setTook] = useState<boolean>(false);
   const { colors } = useTheme();
@@ -23,26 +24,28 @@ export default function PillsComponent({
 
   return (
     <View style={style.viewContainer}>
-      <View
-        style={{
-          width: 30,
-          height: 30,
-          position: "absolute",
-          right: 10,
-          top: 12,
-        }}
-      >
-        <TouchableOpacity
-          style={{ width: "100%", height: "100%" }}
-          onPress={() => delPill(id!)}
+      {onList && (
+        <View
+          style={{
+            width: 30,
+            height: 30,
+            position: "absolute",
+            right: 10,
+            top: 12,
+          }}
         >
-          <MaterialCommunityIcons
-            name="delete-outline"
-            size={30}
-            color="rgba(46, 45, 45, 0.56)"
-          />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            style={{ width: "100%", height: "100%" }}
+            onPress={() => delPill(id!)}
+          >
+            <MaterialCommunityIcons
+              name="delete-outline"
+              size={30}
+              color="rgba(46, 45, 45, 0.56)"
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <View>
         <Text style={typography(colors).heading2}>{name}</Text>
       </View>
