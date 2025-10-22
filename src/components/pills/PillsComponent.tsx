@@ -130,12 +130,15 @@ export default function PillsComponent({
         </View>
       )}
       <View>
-        <ButtonDefault
-          textDefault="Tomar remédio"
-          textPressed="Desfazer"
-          setStatus={setTook}
-          press={took}
-        />
+        {/* Será exibir no lugar do botão a hora que o remedio foi tomado */}
+        {!onList && (
+          <ButtonDefault
+            textDefault="Tomar remédio"
+            textPressed="Desfazer"
+            setStatus={setTook}
+            press={took}
+          />
+        )}
       </View>
       {onList && (
         <Modal

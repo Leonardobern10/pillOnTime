@@ -12,8 +12,21 @@ export default function ButtonDefault({
 }: ButtonDefaultProps) {
   const { colors } = useTheme();
   const style = buttonDefaultStyle(colors, press);
+
+  const startCount = () => {
+    setTimeout(() => {
+      console.log("15 seg");
+    }, 3000);
+  };
+
+  const handlePress = () => {
+    if (!press) {
+      startCount();
+    }
+    setStatus(!press);
+  };
   return (
-    <TouchableOpacity onPress={() => setStatus(!press)} style={style.touchable}>
+    <TouchableOpacity onPress={handlePress} style={style.touchable}>
       <Text style={[typography(colors).body1, style.text]}>
         {press ? textPressed : textDefault}
       </Text>
