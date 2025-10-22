@@ -6,4 +6,5 @@ export type PillsStateType = {
   loadPills: () => Promise<void>;
   addPill: (pill: PillDataFormProps) => Promise<void>;
   delPill: (id: number) => Promise<void>;
+  updatePill: (id: number, newData: PillDataFormProps) => Promise<void>;
 };

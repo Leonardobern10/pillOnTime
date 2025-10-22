@@ -8,6 +8,6 @@ export const listPillsStyle = (color: ThemeProps) =>
       justifyContent: "space-between",
       paddingTop: 20,
       marginBottom: 20,
-      rowGap: 20,
+      rowGap: 40,
     },
   });

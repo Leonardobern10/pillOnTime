@@ -1,3 +1,5 @@
+import { PillDataFormProps } from "./PillDataFormProps";
+
 export type PillType = {
   id: number;
   name: string;
@@ -6,5 +8,6 @@ export type PillType = {
   hour: string;
   obs?: string;
   delPill: (id: number) => void;
+  updatePill: (id: number, newData: PillDataFormProps) => void;
   onList?: boolean;
 };

@@ -4,8 +4,9 @@ import { PillType } from "@/src/types/PillType";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import ButtonDefault from "../global/ButtonDefault";
+import FormPills from "../global/FormPills";
 import { PillsComponenteStyle } from "./PillsComponent.style";
 
 export default function PillsComponent({
@@ -16,9 +17,11 @@ export default function PillsComponent({
   hour,
   obs,
   delPill,
+  updatePill,
   onList,
 }: PillType) {
   const [took, setTook] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const { colors } = useTheme();
   const style = PillsComponenteStyle(colors);
 
@@ -27,19 +30,39 @@ export default function PillsComponent({
       {onList && (
         <View
           style={{
-            width: 30,
-            height: 30,
             position: "absolute",
-            right: 10,
-            top: 12,
+            right: 0,
+            top: -27,
+            display: "flex",
+            flexDirection: "row",
           }}
         >
           <TouchableOpacity
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              width: "auto",
+              height: "100%",
+              backgroundColor: colors.paper.background,
+              borderRadius: 5,
+            }}
             onPress={() => delPill(id!)}
           >
             <MaterialCommunityIcons
               name="delete-outline"
+              size={30}
+              color="rgba(46, 45, 45, 0.56)"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: "auto",
+              height: "100%",
+              backgroundColor: colors.paper.background,
+              borderRadius: 5,
+            }}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <MaterialCommunityIcons
+              name="pencil-box-outline"
               size={30}
               color="rgba(46, 45, 45, 0.56)"
             />
@@ -114,6 +137,29 @@ export default function PillsComponent({
           press={took}
         />
       </View>
+      {onList && (
+        <Modal
+          animationType="fade"
+          visible={modalVisible}
+          backdropColor={colors.paper.background}
+          onRequestClose={() => setModalVisible(!modalVisible)}
+          style={{
+            height: 120,
+            width: 120,
+            boxShadow: "1px 1px 1px solid yellow",
+          }}
+        >
+          <FormPills
+            update={true} // 👈 indica modo de atualização
+            id={id!} // 👈 envia o id real para o update
+            name={name}
+            quantity={quantity}
+            freq={freq}
+            hour={hour}
+            obs={obs}
+          />
+        </Modal>
+      )}
     </View>
   );
 }

@@ -39,3 +39,43 @@ export async function delPill(id: number): Promise<void> {
     console.error("Erro ao deletar registro: " + error);
   }
 }
+
+export async function updatePill(
+  id: number,
+  newData: PillDataFormProps
+): Promise<void> {
+  console.log("Inicinado atualizando de cadastro...");
+  const { name, quantity, freq, hour, obs } = newData;
+  try {
+    await db.runAsync(
+      "UPDATE pills SET name=?, quantity=?, freq=?, hour=?, obs=? WHERE id=?;",
+      [name, quantity, freq, hour, obs || "", id]
+    );
+    console.log(`Remédio com ID ${id} atualizado com sucesso! `);
+  } catch (error) {
+    console.error("Erro ao atualizar remédio: ", error);
+  }
+}
+
+export async function getOnePill(
+  id: number
+): Promise<PillDataFormProps | null> {
+  console.log(`🔍 Buscando dado de id: ${id}`);
+  try {
+    const pill = await db.getFirstAsync<PillDataFormProps>(
+      "SELECT * FROM pills WHERE id = ?;",
+      [id]
+    );
+
+    if (!pill) {
+      console.warn(`⚠️ Nenhum remédio encontrado com o ID ${id}`);
+      return null;
+    }
+
+    console.log("✅ Remédio encontrado:", pill);
+    return pill;
+  } catch (error) {
+    console.error("❌ Erro ao obter medicamento:", error);
+    return null;
+  }
+}

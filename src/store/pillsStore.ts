@@ -1,5 +1,11 @@
 import { create } from "zustand";
-import { addPill, delPill, getAllPills } from "../services/pillService";
+import {
+  addPill,
+  delPill,
+  getAllPills,
+  updatePill,
+} from "../services/pillService";
+import { PillDataFormProps } from "../types/PillDataFormProps";
 import { PillsStateType } from "../types/PillsStateType";
 
 export const usePillsStore = create<PillsStateType>((set) => ({
@@ -17,6 +23,11 @@ export const usePillsStore = create<PillsStateType>((set) => ({
   },
   delPill: async (id: number) => {
     await delPill(id);
+    const updated = await getAllPills();
+    set({ pills: updated || [] });
+  },
+  updatePill: async (id: number, newData: PillDataFormProps) => {
+    await updatePill(id, newData);
     const updated = await getAllPills();
     set({ pills: updated || [] });
   },
