@@ -3,6 +3,7 @@ import {
   addPill,
   delPill,
   getAllPills,
+  getPillsForToday,
   updatePill,
 } from "../services/pillService";
 import { PillDataFormProps } from "../types/PillDataFormProps";
@@ -11,8 +12,14 @@ import { PillsStateType } from "../types/PillsStateType";
 export const usePillsStore = create<PillsStateType>((set) => ({
   pills: [],
   count: 0,
+
   loadPills: async () => {
     const data = await getAllPills();
+    console.log(data);
+    set({ pills: data || [], count: data?.length });
+  },
+  loadPillsToday: async () => {
+    const data = await getPillsForToday();
     console.log(data);
     set({ pills: data || [], count: data?.length });
   },

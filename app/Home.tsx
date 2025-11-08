@@ -1,25 +1,26 @@
+import NullPills from "@/src/components/global/NullPills";
 import PillsComponent from "@/src/components/pills/PillsComponent";
 import ResumeStatistics from "@/src/components/stats/ResumeStatistics";
 import { delPill } from "@/src/services/pillService";
 import { usePillsStore } from "@/src/store/pillsStore";
-import { ThemeProps } from "@/src/theme/ThemeProps";
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { headerStyle } from "./home.styles";
 
 // 👉 Componente principal que usa o tema
 export const Home = () => {
   const { theme, colors, toggleTheme } = useTheme();
   const style = headerStyle(colors);
-  const { pills, loadPills, count } = usePillsStore();
+  const { pills, loadPillsToday, count } = usePillsStore();
 
   useFocusEffect(
     useCallback(() => {
-      loadPills();
+      loadPillsToday();
     }, [])
   );
 
@@ -62,9 +63,12 @@ export const Home = () => {
         <ResumeStatistics countPills={count} />
         <View style={style.pillsGroup}>
           {pills.length === 0 || !pills ? (
-            <Text style={typography(colors).body1}>
-              Nenhum remédio cadastrado...
-            </Text>
+            <View style={style.containerNullPills}>
+              <NullPills />
+              <Text style={typography(colors).body1}>
+                Sem remédios para hoje
+              </Text>
+            </View>
           ) : (
             pills?.map((el, index) => (
               <PillsComponent
@@ -84,40 +88,3 @@ export const Home = () => {
     </SafeAreaView>
   );
 };
-
-const headerStyle = (colors: ThemeProps) =>
-  StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "space-between",
-      alignItems: "center",
-      backgroundColor: colors.light.background,
-    },
-    headerContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      width: "100%",
-      backgroundColor: colors.paper.background,
-      padding: 20,
-    },
-    headerContainerIcons: {
-      flexDirection: "row",
-      alignItems: "center",
-      columnGap: 10,
-    },
-    iconStyle: {
-      opacity: 0.5,
-    },
-    scrollStyle: {
-      padding: 20,
-    },
-    pillsGroup: {
-      flexDirection: "column",
-      justifyContent: "space-between",
-      paddingTop: 20,
-      marginBottom: 20,
-      rowGap: 20,
-    },
-  });

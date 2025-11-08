@@ -1,16 +1,48 @@
 import { db } from "../config/db";
+import { FreqMap } from "../models/FreqMap";
 import { PillDataFormProps } from "../types/PillDataFormProps";
 
 export async function addPill(pill: PillDataFormProps) {
-  await db
-    .runAsync(
-      `INSERT INTO pills (name, quantity, freq, hour, obs) VALUES (?, ?, ?, ?, ?);`,
-      [pill.name, pill.quantity, pill.freq, pill.hour, pill.obs!]
-    )
-    .then((value) => console.log("Medicamento adicionado com sucesso!" + value))
-    .catch((error) =>
-      console.error("Não foi possivel adicionar o medicamento: " + error)
-    );
+  const { name, quantity, freq, hour, date, obs } = pill;
+  const statement = await db.prepareAsync(
+    "INSERT INTO pills (name, quantity, freq, hour, date, obs) VALUES ($name, $quantity, $freq, $hour, $date, $obs);"
+  );
+
+  try {
+    const freqValue = FreqMap[freq]; // converte string em número
+    if (!freqValue) throw new Error(`Frequência inválida: ${freq}`);
+
+    const times = genPills(freqValue, hour);
+
+    for (const time of times) {
+      const now = new Date();
+      const [h, m] = time.split(":").map(Number);
+
+      const doseDate = new Date(now);
+      doseDate.setHours(h, m, 0, 0);
+
+      if (doseDate < now) {
+        doseDate.setDate(doseDate.getDate() + 1);
+      }
+
+      const localDate = doseDate.toLocaleDateString("en-CA"); // formato YYYY-MM-DD
+
+      const params = {
+        $name: name ?? "",
+        $quantity: quantity ?? 0,
+        $freq: freq ?? "",
+        $hour: time,
+        $date: localDate,
+        $obs: obs ?? "",
+      };
+      await statement.executeAsync(params as any);
+      console.log(`💊 ${name} cadastrado para ${time}`);
+    }
+  } catch (error) {
+    console.error("Erro ao cadastrar remédio!", error);
+  } finally {
+    await statement.finalizeAsync();
+  }
 }
 
 export async function getAllPills(): Promise<PillDataFormProps[] | null> {
@@ -78,4 +110,53 @@ export async function getOnePill(
     console.error("❌ Erro ao obter medicamento:", error);
     return null;
   }
+}
+
+export function genPills(freq: number, startTime: string): string[] {
+  const totalDoses = freq;
+  const hoursPerDose = 24 / totalDoses;
+
+  const [startHour, startMinute] = startTime.split(":").map(Number);
+  const startMinutes = startHour * 60 + startMinute;
+
+  const result: string[] = [];
+
+  for (let i = 0; i < totalDoses; i++) {
+    const currentMinutes = (startMinutes + i * hoursPerDose * 60) % (24 * 60);
+    const hour = Math.floor(currentMinutes / 60);
+    const minute = Math.round(currentMinutes % 60);
+    result.push(
+      `${hour.toString().padStart(2, "0")}:${minute
+        .toString()
+        .padStart(2, "0")}`
+    );
+  }
+
+  return result;
+}
+
+export async function getPillsByDate(date: string) {
+  try {
+    const pills = await db.getAllAsync<PillDataFormProps>(
+      "SELECT * FROM pills WHERE date = ? ORDER BY hour ASC;",
+      [date]
+    );
+    return pills;
+  } catch (error) {
+    console.error("Erro ao buscar remédios por data:", error);
+    return [];
+  }
+}
+
+export async function getPillsForToday() {
+  const today = new Date();
+  const localDate = today.toLocaleDateString("en-CA");
+  return getPillsByDate(localDate);
+}
+
+export async function getPillsForTomorrow() {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const localDate = tomorrow.toLocaleDateString("en-CA");
+  return getPillsByDate(localDate);
 }

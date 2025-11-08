@@ -12,7 +12,9 @@ export const createTable = async (): Promise<void> => {
         quantity TEXT NOT NULL,
         freq TEXT NOT NULL,
         hour TEXT NOT NULL,
-        obs TEXT
+        date TEXT NOT NULL,
+        obs TEXT,
+        created_at TEXT DEFAULT (DATE('now'))
       );
     `);
     console.log("✅ Tabela criada com sucesso!");

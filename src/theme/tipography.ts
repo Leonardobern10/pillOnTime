@@ -6,7 +6,7 @@ export const typography = (theme: ThemeProps) =>
     companyName: {
       fontSize: 30,
       color: `${theme.primary.background}`,
-      fontFamily: "Montserrat_900Black",
+      fontFamily: "Montserrat_700Bold",
     },
     heading1: {
       fontSize: 30,

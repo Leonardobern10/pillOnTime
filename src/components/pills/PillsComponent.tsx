@@ -1,3 +1,4 @@
+import { usePillsStore } from "@/src/store/pillsStore";
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { typography } from "@/src/theme/tipography";
 import { PillType } from "@/src/types/PillType";
@@ -17,13 +18,21 @@ export default function PillsComponent({
   hour,
   obs,
   delPill,
-  updatePill,
   onList,
 }: PillType) {
   const [took, setTook] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { colors } = useTheme();
   const style = PillsComponenteStyle(colors);
+
+  const { loadPillsToday } = usePillsStore();
+
+  const handleComplete = async () => {
+    if (!id) return;
+    console.log(`💊 Deletando remédio ${name} após 15s...`);
+    await delPill(id);
+    await loadPillsToday(); // recarrega a lista para sumir da tela
+  };
 
   return (
     <View style={style.viewContainer}>
@@ -137,6 +146,7 @@ export default function PillsComponent({
             textPressed="Desfazer"
             setStatus={setTook}
             press={took}
+            onComplete={handleComplete}
           />
         )}
       </View>

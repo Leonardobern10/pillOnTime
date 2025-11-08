@@ -1,4 +1,5 @@
 import { selectItems } from "@/src/data/selectFreqData";
+import { useFormPills } from "@/src/hooks/useFormPIlls";
 import { generateHours } from "@/src/services/generateHours";
 import { getOnePill } from "@/src/services/pillService";
 import { usePillsStore } from "@/src/store/pillsStore";
@@ -31,8 +32,19 @@ export default function FormPills({
     quantity: quantity ? quantity : "",
     freq: freq ? freq : "",
     hour: hour ? hour : "",
+    date: new Date().toLocaleDateString("en-CA"),
     obs: obs ? obs : "",
   });
+
+  useFormPills(
+    update,
+    id,
+    getOnePill,
+    setDataForm,
+    dataForm,
+    updatePill,
+    addPill
+  );
 
   useEffect(() => {
     const loadPill = async () => {
@@ -58,6 +70,7 @@ export default function FormPills({
       quantity: "",
       freq: "",
       hour: "",
+      date: "",
       obs: "",
     });
   };

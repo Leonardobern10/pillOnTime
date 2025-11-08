@@ -1,6 +1,7 @@
 import { useTheme } from "@/src/theme/ThemeProvider";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
+import { Pressable } from "react-native";
 
 export default function TabNavigation() {
   const { colors } = useTheme();
@@ -8,7 +9,11 @@ export default function TabNavigation() {
     <Tabs
       initialRouteName="index"
       screenOptions={({ route }) => ({
-        headerShown: false,
+        headerShown: route.name !== "index",
+        headerStyle: {
+          backgroundColor: `${colors.primary.background}`,
+        },
+        headerTintColor: `${colors.primary.text}`,
         tabBarActiveTintColor: `${colors.primary.background}`,
         tabBarInactiveTintColor: `${colors.primary.text}`,
         tabBarStyle: {
@@ -26,17 +31,63 @@ export default function TabNavigation() {
           else if (route.name === "Pills/index") iconName = "pills";
           else if (route.name === "Add/index") iconName = "plus";
           else if (route.name === "History/index") iconName = "history";
-          else if (route.name === "Profile/index") iconName = "user-alt";
 
           return <FontAwesome5 name={iconName} size={20} color={`${color}`} />;
         },
       })}
     >
-      <Tabs.Screen name="index" options={{ title: "Início" }} />
-      <Tabs.Screen name="Pills/index" options={{ title: "Remédio" }} />
-      <Tabs.Screen name="Add/index" options={{ title: "Adicionar" }} />
-      <Tabs.Screen name="History/index" options={{ title: "Histórico" }} />
-      <Tabs.Screen name="Profile/index" options={{ title: "Perfil" }} />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Início",
+          headerShown: false, // 👈 garante que não tenha header aqui
+        }}
+      />
+      <Tabs.Screen
+        name="Pills/index"
+        options={{
+          title: "Remédio",
+          headerLeft: () => (
+            <Pressable onPress={() => router.push("/")} style={{ padding: 8 }}>
+              <FontAwesome5
+                name="arrow-left"
+                size={18}
+                color={colors.primary.text}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Add/index"
+        options={{
+          title: "Adicionar medicamento",
+          headerLeft: () => (
+            <Pressable onPress={() => router.push("/")} style={{ padding: 8 }}>
+              <FontAwesome5
+                name="arrow-left"
+                size={18}
+                color={colors.primary.text}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="History/index"
+        options={{
+          title: "Histórico",
+          headerLeft: () => (
+            <Pressable onPress={() => router.push("/")} style={{ padding: 8 }}>
+              <FontAwesome5
+                name="arrow-left"
+                size={18}
+                color={colors.primary.text}
+              />
+            </Pressable>
+          ),
+        }}
+      />
     </Tabs>
   );
 }
