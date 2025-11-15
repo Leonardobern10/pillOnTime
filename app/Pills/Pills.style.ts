@@ -5,12 +5,11 @@ export const PillsStyle = (colors: ThemeProps) =>
   StyleSheet.create({
     safeAreaStyle: {
       display: "flex",
+      flex: 1,
       flexDirection: "column",
       alignItems: "center",
       rowGap: 10,
       width: "100%",
-      flex: 1,
-      padding: 20,
       paddingLeft: 10,
       paddingRight: 10,
       backgroundColor: colors.light.background,

@@ -134,14 +134,17 @@ const addStyle = (colors: ThemeProps) =>
   StyleSheet.create({
     container: {
       display: "flex",
+      flex: 1,
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-evenly",
       rowGap: 10,
       height: "100%",
-      padding: 20,
+      paddingLeft: 20,
+      paddingRight: 20,
     },
     safeArea: {
+      display: "flex",
       flex: 1,
       flexDirection: "column",
       justifyContent: "space-between",

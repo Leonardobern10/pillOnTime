@@ -20,7 +20,7 @@ export default function InputString({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        rowGap: 2,
+        rowGap: 15,
       }}
     >
       <Text style={[typography(colors).body1, inputStyle(colors).label]}>
