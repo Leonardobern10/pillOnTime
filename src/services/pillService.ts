@@ -36,7 +36,6 @@ export async function addPill(pill: PillDataFormProps) {
         $obs: obs ?? "",
       };
       await statement.executeAsync(params as any);
-      console.log(`💊 ${name} cadastrado para ${time}`);
     }
   } catch (error) {
     console.error("Erro ao cadastrar remédio!", error);
@@ -46,7 +45,6 @@ export async function addPill(pill: PillDataFormProps) {
 }
 
 export async function getAllPills(): Promise<PillDataFormProps[] | null> {
-  console.log("Obtendo registros...");
   try {
     const result = await db.getAllAsync<PillDataFormProps>(
       `SELECT * FROM pills;`
@@ -65,7 +63,6 @@ export async function delPill(id: number): Promise<void> {
   console.log("Removendo registro...");
   try {
     await db.runAsync("DELETE FROM pills WHERE id = ?", [id]);
-
     console.log(`Registro id: ${id} removido com sucesso!`);
   } catch (error) {
     console.error("Erro ao deletar registro: " + error);
@@ -76,7 +73,7 @@ export async function updatePill(
   id: number,
   newData: PillDataFormProps
 ): Promise<void> {
-  console.log("Inicinado atualizando de cadastro...");
+  console.log("Iniciando atualização de cadastro...");
   const { name, quantity, freq, hour, obs } = newData;
   try {
     await db.runAsync(
