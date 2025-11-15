@@ -1,10 +1,12 @@
 import { useTheme } from "@/src/theme/ThemeProvider";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { router, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 export default function TabNavigation() {
   const { colors } = useTheme();
+  const handleBack = () => router.push("/");
+
   return (
     <Tabs
       initialRouteName="index"
@@ -28,9 +30,9 @@ export default function TabNavigation() {
           let iconName;
 
           if (route.name === "index") iconName = "home";
-          else if (route.name === "Pills/index") iconName = "pills";
-          else if (route.name === "Add/index") iconName = "plus";
-          else if (route.name === "History/index") iconName = "history";
+          else if (route.name === "Pills") iconName = "pills";
+          else if (route.name === "Add") iconName = "plus";
+          else if (route.name === "History") iconName = "history";
 
           return <FontAwesome5 name={iconName} size={20} color={`${color}`} />;
         },
@@ -44,11 +46,11 @@ export default function TabNavigation() {
         }}
       />
       <Tabs.Screen
-        name="Pills/index"
+        name="Pills"
         options={{
           title: "Remédio",
           headerLeft: () => (
-            <Pressable onPress={() => router.push("/")} style={{ padding: 8 }}>
+            <Pressable onPress={handleBack} style={style.arrowBack}>
               <FontAwesome5
                 name="arrow-left"
                 size={18}
@@ -59,11 +61,11 @@ export default function TabNavigation() {
         }}
       />
       <Tabs.Screen
-        name="Add/index"
+        name="Add"
         options={{
-          title: "Adicionar medicamento",
+          title: "Adicionar",
           headerLeft: () => (
-            <Pressable onPress={() => router.push("/")} style={{ padding: 8 }}>
+            <Pressable onPress={handleBack} style={style.arrowBack}>
               <FontAwesome5
                 name="arrow-left"
                 size={18}
@@ -74,11 +76,11 @@ export default function TabNavigation() {
         }}
       />
       <Tabs.Screen
-        name="History/index"
+        name="History"
         options={{
           title: "Histórico",
           headerLeft: () => (
-            <Pressable onPress={() => router.push("/")} style={{ padding: 8 }}>
+            <Pressable onPress={handleBack} style={style.arrowBack}>
               <FontAwesome5
                 name="arrow-left"
                 size={18}
@@ -91,3 +93,11 @@ export default function TabNavigation() {
     </Tabs>
   );
 }
+
+const style = StyleSheet.create({
+  arrowBack: {
+    padding: 8,
+    paddingLeft: 20,
+    paddingRight: 10,
+  },
+});
